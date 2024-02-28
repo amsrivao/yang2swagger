@@ -1,0 +1,27 @@
+package {{package}}.impl;
+
+import {{package}}.*;
+
+{{#imports}}import {{import}};
+{{/imports}}
+
+import java.util.List;
+
+import java.io.InputStream;
+
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+
+{{>generatedAnnotation}}
+{{#operations}}
+public class {{classname}}ServiceImpl extends {{classname}}Service {
+    {{#operation}}
+    @Override
+    public Response {{nickname}}({{#allParams}}{{>serviceQueryParams}}{{>servicePathParams}}{{>serviceHeaderParams}}{{>serviceBodyParams}}{{>serviceFormParams}}, {{/allParams}}SecurityContext securityContext, javax.ws.rs.core.UriInfo uriInfo) throws Exception {
+        // do some magic!
+        // but for now
+        throw new IllegalAccessException("Not implemented");
+    }
+    {{/operation}}
+}
+{{/operations}}

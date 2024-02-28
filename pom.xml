@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2016 MRV Communications, Inc. All rights reserved.
+  ~  This program and the accompanying materials are made available under the
+  ~  terms of the Eclipse Public License v1.0 which accompanies this distribution,
+  ~  and is available at http://www.eclipse.org/legal/epl-v10.html
+  ~
+  ~  Contributors:
+  ~      Christopher Murch <cmurch@mrv.com>
+  ~      Bartosz Michalik <bartosz.michalik@amartus.com>
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mrv.yangtools</groupId>
+    <artifactId>yangtools</artifactId>
+   <version>1.2</version>
+    <modules>
+        <module>swagger-generator</module>
+        <module>common</module>
+        <module>cli</module>
+        <module>swagger-maven-plugin</module>
+        <module>examples</module>
+        <module>swagger-codegen-jaxrs</module>
+    </modules>
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <logback.version>1.2.9</logback.version>
+        <swagger.version>1.5.9</swagger.version>
+        <swagger.codegen.version>2.2.1</swagger.codegen.version>
+        <yangtools.version>1.2.1</yangtools.version>
+        <guice.version>4.1.0</guice.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>30.1-jre</version>
+            </dependency>
+
+			<!-- IoC Google Guice -->
+			<dependency>
+				<groupId>com.google.inject</groupId>
+				<artifactId>guice</artifactId>
+				<version>${guice.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.inject.extensions</groupId>
+				<artifactId>guice-assistedinject</artifactId>
+				<version>${guice.version}</version>
+			</dependency>
+
+            <!-- odl -->
+
+            <dependency>
+                <groupId>org.opendaylight.yangtools</groupId>
+                <artifactId>yang-model-api</artifactId>
+                <version>${yangtools.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.opendaylight.yangtools</groupId>
+                <artifactId>yang-common</artifactId>
+                <version>${yangtools.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.opendaylight.yangtools</groupId>
+                <artifactId>yang-maven-plugin-spi</artifactId>
+                <version>${yangtools.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.opendaylight.yangtools</groupId>
+                <artifactId>yang-parser-impl</artifactId>
+                <version>${yangtools.version}</version>
+            </dependency>
+
+            <!-- logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.18</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.13.1</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>3.12.4</version>
+                <scope>test</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <includes>
+                        <include>*TestIt.java</include>
+                        <include>*Test.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+	<distributionManagement>
+		<repository>
+			<id>bintray-yang2swagger-yang2swagger</id>
+			<name>yang2swagger-yang2swagger</name>
+			<url>https://api.bintray.com/maven/yang2swagger/yang2swagger/yang2swagger/;publish=1</url>
+		</repository>
+	</distributionManagement>
+</project>

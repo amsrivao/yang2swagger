@@ -1,0 +1,75 @@
+module with-groupings {
+  namespace "http://amartus/ns/yang/groupings";
+  prefix gr;
+  organization "test-yang";
+  description "groupings test module";
+
+  revision 2016-06-22 {
+      description "Final";
+  }
+
+  grouping g1 {
+    leaf idx {
+        type int32;
+    }
+  }
+
+  grouping g2 {
+    leaf g2-leaf {
+        type string;
+    }
+    container g2-c {
+        grouping g3 {
+            leaf g3-idx {
+              type string;
+            }
+        }
+
+        leaf g2-c-leaf {
+            type string;
+        }
+        container g2-c-c1 {
+            uses g3;
+        }
+        container g2-c-c2 {
+            uses g3;
+        }
+        list g2-l1 {
+            key "g3-idx";
+            uses g3;
+        }
+    }
+  }
+
+  typedef myint1 {
+    type int32 {
+        range 1..4096;
+    }
+  }
+
+  container grouping-root {
+    grouping g1 {
+      leaf g1-l2 {
+          type string;
+      }
+    }
+    list c1 {
+        leaf id {
+            type myint1;
+        }
+        uses g1;
+        uses g2;
+    }
+
+    container grouping-child1 {
+        uses g2;
+        leaf-list names {
+            type string;
+        }
+    }
+    container grouping-child2 {
+        uses g2;
+    }
+  }
+
+}

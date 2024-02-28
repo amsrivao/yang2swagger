@@ -1,0 +1,81 @@
+module rpc-basic {
+    namespace "http://amartus/ns/yang/rock";
+    prefix ro;
+    description "read-only test module";
+    organization "test-yang";
+
+    grouping res {
+        container c-res {
+            leaf id {
+                type int32;
+            }
+            leaf status {
+                type string;
+            }
+        }
+    }
+
+    grouping b-elem {
+        leaf key {type string; }
+        list values {
+            container embd {
+                leaf xyz {type string;}
+            }
+            leaf idx {type int8;}
+            key 'idx';
+        }
+
+    }
+
+    rpc with-multiple-elements {
+        input {
+            container a {
+                uses res;
+            }
+            list b {
+                uses b-elem;
+                key 'key';
+            }
+        }
+    }
+
+    rpc rock-the-house {
+        input {
+            container xyz {
+                uses res;
+            }
+
+        }
+        output {
+            container response {
+                leaf configrmation {
+                    type string;
+                }
+                uses res;
+            }
+        }
+    }
+
+    rpc hello {
+        description "simple hello method";
+        input {
+            leaf str { type string; }
+        }
+        output {
+            uses res;
+        }
+    }
+
+    rpc get-status {
+        description "simple hello method";
+        output {
+           leaf status {
+                type string;
+            }
+        }
+    }
+
+    container root {
+        uses res;
+    }
+}
